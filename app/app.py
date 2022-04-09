@@ -8,11 +8,6 @@ from services import ExchangeRateService
 from settings import app, db
 
 
-@app.route("/")
-def starting():
-    return "hello world"
-
-
 @app.route("/convert", methods=["GET"])
 def convert():
     crypto = request.args.get("crypto")
@@ -55,6 +50,5 @@ def convert():
 
 
 if __name__ == "__main__":
-    db.drop_all()
     db.create_all()
-    app.run()
+    app.run(host="localhost", port=8000, debug=True)
