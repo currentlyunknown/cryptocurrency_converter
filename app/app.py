@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import request, jsonify
 
 from exceptions import CustomException
-from models import ExchangeRateRequest
+from models import Exchange
 from services import ExchangeRateService
 from settings import app, db
 
@@ -12,11 +12,11 @@ from settings import app, db
 def convert():
     crypto = request.args.get("crypto")
     fiat = request.args.get("fiat")
-    if crypto is None or fiat is None:
+    if None in (crypto, fiat):
         raise CustomException("Both crypto and fiat are needed")
     try:
         crypto_amount = float(request.args.get("crypto_amount_to_convert"))
-    except:
+    except (ValueError, TypeError):
         raise CustomException("Wrong amount to convert")
 
     utcnow = datetime.utcnow()
@@ -34,16 +34,7 @@ def convert():
         "datetime": utcnow
     }
 
-    entry = ExchangeRateRequest(
-        crypto=crypto,
-        fiat=fiat,
-        datetime=utcnow,
-        rate=exchange_rate,
-        crypto_amount=crypto_amount,
-        fiat_amount=converted_amount,
-    )
-
-    db.session.add(entry)
+    db.session.add(Exchange(**payload))
     db.session.commit()
 
     return jsonify(payload)

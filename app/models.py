@@ -3,8 +3,8 @@ from sqlalchemy import Column, String, Float, Integer, DateTime
 from settings import db
 
 
-class ExchangeRateRequest(db.Model):
-    __tablename__ = 'exchange_rate_requests'
+class Exchange(db.Model):
+    __tablename__ = 'exchange'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     crypto = Column(String(20), nullable=False)

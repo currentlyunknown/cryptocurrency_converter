@@ -26,7 +26,7 @@ You have to pass the following parameters:
 - crypto_amount_to_convert: the amount of crypto you want to convert
 
 Example request:
-/convert?crypto=bitcoin&fiat=usd&crypto_amount=55
+/convert?crypto=bitcoin&fiat=usd&crypto_amount_to_convert=55
 
 Example response in JSON format:
 {
